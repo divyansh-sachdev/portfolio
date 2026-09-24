@@ -1,0 +1,725 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Divyansh Sachdev</title>
+<meta name="description" content="AI + Robotics engineer — Founder at Shunya, Frontend Engineer at Paysecure. 90+ competition wins, 14 AI/hardware codebases.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --bg:#030408;
+    --card-bg:#0c101ca6;
+    --card-border:#00f3ff26;
+    --card-border-strong:#00f3ff4d;
+    --cyan:#00f3ff;
+    --blue:#0066ff;
+    --purple:#9d00ff;
+    --text:#ffffff;
+    --text-dim:#94a3b8;
+    --text-faint:#5b6b83;
+    --gold:#fac800;
+    --silver:#90a1b9;
+    --bronze:#f99c00;
+    --panel:#0a0e16;
+    --radius:14px;
+    color-scheme: dark;
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{
+    background:var(--bg);
+    color:var(--text-dim);
+    font-family:'Inter', system-ui, sans-serif;
+    font-size:15px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{ max-width:100%; }
+  h1,h2,h3,.display{ font-family:'Space Grotesk','Inter',sans-serif; color:var(--text); }
+  .mono, .stat-num, .eyebrow, .field-label, .badge, .tag, th, .boot{ font-family:'JetBrains Mono',ui-monospace,monospace; }
+  a{ color:inherit; }
+  svg{ display:block; }
+  ::selection{ background:var(--cyan); color:#04140f; }
+  :focus-visible{ outline:2px solid var(--cyan); outline-offset:2px; border-radius:4px; }
+
+  @media (prefers-reduced-motion: no-preference){
+    .glow{ animation:pulse 8s ease-in-out infinite; }
+    .cursor{ animation:blink 1s step-end infinite; }
+    .ring{ animation:spin 16s linear infinite; }
+    .ring2{ animation:spin 24s linear infinite reverse; }
+  }
+  @keyframes pulse{ 0%,100%{ opacity:.5; } 50%{ opacity:.85; } }
+  @keyframes blink{ 50%{ opacity:0; } }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+
+  .bg-grid{
+    position:fixed; inset:0; z-index:-2;
+    background-image:
+      linear-gradient(#0f1520 1px, transparent 1px),
+      linear-gradient(90deg, #0f1520 1px, transparent 1px);
+    background-size:44px 44px;
+    mask-image:radial-gradient(ellipse 75% 55% at 50% 0%, #000 40%, transparent 90%);
+    opacity:.6;
+  }
+  .bg-glow{ position:fixed; inset:0; z-index:-1; pointer-events:none; }
+  .bg-glow::before, .bg-glow::after{
+    content:''; position:absolute; width:48vmax; height:48vmax; border-radius:50%;
+    filter:blur(130px); opacity:.15;
+  }
+  .bg-glow::before{ background:var(--cyan); top:-20vmax; left:-14vmax; }
+  .bg-glow::after{ background:var(--purple); bottom:-22vmax; right:-16vmax; }
+
+  .wrap{ max-width:1180px; margin:0 auto; padding-inline:20px; }
+
+  /* NAV */
+  .topnav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(3,4,8,.78); backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--card-border);
+  }
+  .topnav .wrap{ display:flex; align-items:center; justify-content:space-between; height:60px; gap:16px; }
+  .brand{ display:flex; align-items:center; gap:9px; font-weight:700; letter-spacing:.02em; font-size:15px; text-decoration:none; }
+  .brand .dot{ width:8px; height:8px; border-radius:50%; background:var(--cyan); box-shadow:0 0 12px var(--cyan); flex:none; }
+  .navlinks{ display:flex; gap:24px; list-style:none; margin:0; padding:0; overflow-x:auto; scrollbar-width:none; }
+  .navlinks a{ text-decoration:none; font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--text-faint); transition:color .15s; font-family:'JetBrains Mono',monospace; }
+  .navlinks a:hover{ color:var(--cyan); }
+  .navlinks::-webkit-scrollbar{ display:none; }
+  .nav-btn{
+    display:inline-flex; align-items:center; gap:7px;
+    border:1px solid var(--card-border-strong); color:var(--cyan); background:#00f3ff0d;
+    padding:8px 16px; border-radius:6px; font-size:11.5px; letter-spacing:.08em; text-transform:uppercase;
+    text-decoration:none; white-space:nowrap; transition:background .15s, transform .15s; font-family:'JetBrains Mono',monospace;
+  }
+  .nav-btn:hover{ background:#00f3ff1f; transform:translateY(-1px); }
+  .nav-social{ display:flex; align-items:center; gap:8px; flex:none; }
+  .nav-icon{
+    display:inline-flex; align-items:center; justify-content:center; width:34px; height:34px;
+    border:1px solid var(--card-border); border-radius:6px; color:var(--text-dim);
+    background:var(--card-bg); transition:color .15s, border-color .15s, transform .15s;
+  }
+  .nav-icon:hover{ color:var(--cyan); border-color:var(--card-border-strong); transform:translateY(-1px); }
+
+  section{ padding-block:clamp(52px, 8vw, 100px); }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:10px; font-size:11.5px; letter-spacing:.16em;
+    text-transform:uppercase; color:var(--cyan); margin-bottom:16px; font-weight:600;
+  }
+  .eyebrow .num{ color:var(--purple); }
+  h2.title{ font-size:clamp(26px,3.4vw,40px); margin:0 0 10px; text-wrap:balance; font-weight:700; }
+  .lede{ color:var(--text-dim); max-width:64ch; margin:0 0 38px; font-size:15px; }
+
+  /* ICONS */
+  .icon{ width:18px; height:18px; stroke:currentColor; fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; flex:none; }
+
+  /* HERO */
+  .hero{ padding-top:clamp(48px,9vw,84px); }
+  .hero-grid{ display:grid; grid-template-columns:1.35fr 1fr; gap:44px; align-items:center; }
+  @media (max-width:900px){ .hero-grid{ grid-template-columns:1fr; } }
+  .boot{
+    display:inline-flex; align-items:center; gap:8px;
+    border:1px solid var(--card-border-strong); background:var(--card-bg); border-radius:20px;
+    padding:8px 16px; font-size:11.5px; color:var(--cyan); margin-bottom:24px;
+  }
+  .boot .icon{ width:14px; height:14px; }
+  .hero h1{
+    font-size:clamp(36px,6vw,60px); line-height:1.05; margin:0 0 6px; font-weight:700; text-wrap:balance;
+    letter-spacing:-.01em;
+  }
+  .hero .role{
+    font-size:clamp(15px,1.6vw,18px); color:var(--purple); font-weight:600; margin:0 0 20px;
+    letter-spacing:.02em; font-family:'Space Grotesk',sans-serif;
+  }
+  .hero .bio{ max-width:56ch; margin:0 0 26px; font-size:14.5px; }
+  .field-row{ display:flex; flex-wrap:wrap; gap:22px; margin-bottom:30px; }
+  .field{ display:flex; flex-direction:column; gap:3px; }
+  .field-label{ font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--text-faint); }
+  .field-value{ font-size:13px; color:var(--text); font-weight:600; }
+  .field-value.link{ text-decoration:none; transition:color .15s; }
+  .field-value.link:hover{ color:var(--cyan); text-decoration:underline; }
+  .hero-actions{ display:flex; flex-wrap:wrap; gap:12px; margin-bottom:40px; }
+  .btn{
+    display:inline-flex; align-items:center; gap:8px; padding:12px 22px; border-radius:7px;
+    font-size:12.5px; letter-spacing:.06em; text-transform:uppercase; text-decoration:none; font-weight:700;
+    transition:transform .15s, box-shadow .15s; font-family:'JetBrains Mono',monospace;
+  }
+  .btn-primary{ background:var(--cyan); color:#03130f; }
+  .btn-primary:hover{ transform:translateY(-2px); box-shadow:0 10px 28px -10px #00f3ff80; }
+  .btn-ghost{ border:1px solid var(--card-border-strong); color:var(--text); background:var(--card-bg); }
+  .btn-ghost:hover{ border-color:var(--cyan); transform:translateY(-2px); }
+
+  .stat-row{ display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:1px; background:var(--card-border); border:1px solid var(--card-border); border-radius:var(--radius); overflow:hidden; }
+  .stat{ background:var(--card-bg); padding:18px 16px; }
+  .stat-num{ font-size:clamp(22px,3vw,30px); font-weight:700; color:var(--cyan); font-variant-numeric:tabular-nums; }
+  .stat-label{ font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--text-faint); margin-top:4px; }
+
+  /* HUD PANEL */
+  .hud-wrap{ display:flex; flex-direction:column; align-items:center; gap:18px; }
+  .hud{
+    position:relative; width:min(300px, 78vw); aspect-ratio:1/1; border-radius:50%;
+    border:1px solid var(--card-border-strong); background:radial-gradient(circle at 50% 40%, #0c1224 0%, #030408 75%);
+    display:flex; align-items:center; justify-content:center; flex:none;
+  }
+  .hud .ring{ position:absolute; inset:10px; border-radius:50%; border:1px dashed #00f3ff40; }
+  .hud .ring2{ position:absolute; inset:30px; border-radius:50%; border:1px solid #9d00ff40; }
+  .hud-photo{
+    width:200px; height:200px; max-width:64%; aspect-ratio:1/1;
+    border-radius:50%; object-fit:cover; z-index:2;
+    border:2px solid var(--cyan); box-shadow:0 0 34px -6px #00f3ff99;
+  }
+  .hud-status{
+    display:inline-flex; align-items:center; gap:8px;
+    font-size:10.5px; letter-spacing:.14em; color:var(--cyan);
+    font-family:'JetBrains Mono',monospace;
+    border:1px solid var(--card-border-strong); background:var(--card-bg);
+    padding:6px 14px; border-radius:20px;
+  }
+  .hud-status .led{ width:6px; height:6px; border-radius:50%; background:var(--cyan); box-shadow:0 0 8px var(--cyan); flex:none; }
+  .hud-readout{
+    display:flex; justify-content:center; gap:1px; width:100%; max-width:300px;
+    background:var(--card-border); border:1px solid var(--card-border); border-radius:8px; overflow:hidden;
+  }
+  .hud-readout div{ flex:1; background:var(--card-bg); padding:10px 6px; text-align:center;
+    font-size:9.5px; letter-spacing:.1em; font-family:'JetBrains Mono',monospace; color:var(--text-faint); }
+  .hud-readout b{ color:var(--cyan); display:block; font-size:15px; margin-top:3px; font-variant-numeric:tabular-nums; }
+
+  /* PANELS / CARDS shared */
+  .panel{
+    border:1px solid var(--card-border); background:var(--card-bg); border-radius:var(--radius);
+    backdrop-filter:blur(6px);
+  }
+
+  /* PROFILE / BIO */
+  .profile-grid{ display:grid; grid-template-columns:1.1fr .9fr; gap:24px; }
+  @media (max-width:820px){ .profile-grid{ grid-template-columns:1fr; } }
+  .yaml-card{ padding:24px 26px; font-size:13px; overflow-x:auto; }
+  .yaml-card .k{ color:var(--purple); }
+  .yaml-card .s{ color:var(--cyan); }
+  .yaml-card .c{ color:var(--text-faint); }
+  .yaml-card pre{ margin:0; white-space:pre-wrap; word-break:break-word; line-height:1.9; font-family:'JetBrains Mono',monospace; }
+  .side-stats{ display:flex; flex-direction:column; gap:1px; background:var(--card-border); border:1px solid var(--card-border); border-radius:var(--radius); overflow:hidden; }
+  .side-stats .row{ background:var(--card-bg); padding:16px 20px; display:flex; justify-content:space-between; align-items:baseline; gap:12px; }
+  .side-stats .row span:first-child{ color:var(--text-dim); font-size:13px; }
+  .side-stats .row b{ color:var(--cyan); font-variant-numeric:tabular-nums; font-size:15px; font-family:'JetBrains Mono',monospace; }
+
+  /* TIMELINE (EXPERIENCE) */
+  .timeline{ position:relative; display:flex; flex-direction:column; gap:28px; padding-left:30px; }
+  .timeline::before{ content:''; position:absolute; left:6px; top:6px; bottom:6px; width:1px; background:linear-gradient(var(--cyan), var(--purple)); opacity:.35; }
+  .tl-item{ position:relative; }
+  .tl-dot{ position:absolute; left:-30px; top:4px; width:13px; height:13px; border-radius:50%; background:var(--panel); border:2px solid var(--cyan); box-shadow:0 0 10px #00f3ff80; }
+  .tl-item.current .tl-dot{ border-color:var(--purple); box-shadow:0 0 10px #9d00ff80; }
+  .tl-card{ padding:20px 24px; }
+  .tl-top{ display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between; gap:10px; margin-bottom:6px; }
+  .tl-role{ font-size:16px; font-weight:700; color:var(--text); font-family:'Space Grotesk',sans-serif; }
+  .tl-org{ color:var(--cyan); font-weight:600; }
+  .tl-dates{ font-size:11.5px; letter-spacing:.06em; color:var(--text-faint); font-family:'JetBrains Mono',monospace; white-space:nowrap; }
+  .tl-desc{ font-size:13.5px; color:var(--text-dim); margin:8px 0 12px; max-width:60ch; }
+  .tl-tags{ display:flex; flex-wrap:wrap; gap:7px; }
+
+  /* HONORS */
+  .highlight-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:12px; margin-bottom:32px; }
+  .h-card{ padding:15px 17px; display:flex; flex-direction:column; gap:9px; }
+  .h-card .ev{ font-size:13px; font-weight:600; line-height:1.35; color:var(--text); }
+  .badge{
+    display:inline-flex; align-items:center; font-size:10.5px; letter-spacing:.06em;
+    padding:4px 10px; border-radius:4px; width:fit-content; font-weight:700;
+  }
+  .badge.W{ background:#fac80014; color:var(--gold); border:1px solid #fac80040; }
+  .badge.R1{ background:#0066ff14; color:#5b9dff; border:1px solid #0066ff40; }
+  .badge.R2{ background:#9d00ff14; color:#c07eff; border:1px solid #9d00ff40; }
+  .badge.R3{ background:#00f3ff14; color:var(--cyan); border:1px solid #00f3ff40; }
+  .badge.F{ background:#94a3b814; color:var(--text-dim); border:1px solid #94a3b840; }
+
+  .chiprow{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px; }
+  .chip{
+    border:1px solid var(--card-border); background:var(--card-bg); color:var(--text-dim);
+    padding:8px 14px; border-radius:20px; font-size:11.5px; cursor:pointer; font-family:'JetBrains Mono',monospace;
+    transition:all .15s; user-select:none;
+  }
+  .chip b{ font-variant-numeric:tabular-nums; }
+  .chip:hover{ border-color:var(--card-border-strong); color:var(--text); }
+  .chip.active{ background:var(--cyan); color:#03130f; border-color:var(--cyan); font-weight:700; }
+
+  .table-panel{ overflow:hidden; }
+  .table-scroll{ max-height:440px; overflow-y:auto; }
+  .table-scroll::-webkit-scrollbar{ width:9px; }
+  .table-scroll::-webkit-scrollbar-track{ background:transparent; }
+  .table-scroll::-webkit-scrollbar-thumb{ background:var(--card-border-strong); border-radius:6px; }
+  table{ width:100%; border-collapse:collapse; font-size:13px; }
+  thead th{
+    position:sticky; top:0; background:#0c101cf0; text-align:left; padding:12px 20px;
+    font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--text-faint); border-bottom:1px solid var(--card-border);
+  }
+  tbody td{ padding:11px 20px; border-bottom:1px solid #ffffff0d; color:var(--text); }
+  tbody tr:last-child td{ border-bottom:none; }
+  tbody tr:hover{ background:#00f3ff08; }
+  .row-hidden{ display:none; }
+  .table-foot{ padding:11px 20px; font-size:11.5px; color:var(--text-faint); border-top:1px solid var(--card-border); }
+
+  /* STACK */
+  .stack-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:14px; }
+  .stack-card{ padding:20px 22px; }
+  .stack-card h3{ margin:0 0 14px; font-size:14px; color:var(--text); display:flex; align-items:center; gap:10px; font-family:'Space Grotesk',sans-serif; }
+  .stack-card .icon{ color:var(--purple); width:17px; height:17px; }
+  .tagset{ display:flex; flex-wrap:wrap; gap:7px; }
+  .tag{ font-size:11px; padding:6px 11px; border-radius:5px; background:#ffffff08; border:1px solid var(--card-border); color:var(--text-dim); }
+
+  /* PROJECTS */
+  .proj-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(270px,1fr)); gap:16px; }
+  .proj-card{
+    padding:22px; display:flex; flex-direction:column; gap:12px; transition:border-color .15s, transform .15s;
+  }
+  .proj-card:hover{ border-color:var(--card-border-strong); transform:translateY(-3px); }
+  .proj-head{ display:flex; align-items:center; gap:10px; }
+  .proj-head .icon{ color:var(--cyan); width:18px; height:18px; }
+  .proj-card h3{ margin:0; font-size:15px; font-family:'JetBrains Mono',monospace; font-weight:600; }
+  .proj-card p{ margin:0; font-size:13px; color:var(--text-dim); flex:1; }
+  .proj-card .tagset{ margin-top:2px; }
+  .proj-card .tag{ font-size:10.5px; }
+  .proj-link{
+    display:inline-flex; align-items:center; gap:6px; font-size:12px; color:var(--cyan);
+    text-decoration:none; font-weight:700; margin-top:4px; letter-spacing:.04em;
+  }
+  .proj-link:hover{ text-decoration:underline; }
+
+  /* PUBLICATIONS */
+  .pub-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:14px; }
+  .pub-card{ border:1px solid var(--card-border); background:var(--card-bg); border-radius:var(--radius); padding:19px 21px; display:flex; flex-direction:column; gap:8px; }
+  .pub-card .status{ align-self:flex-start; font-size:10px; letter-spacing:.1em; padding:3px 9px; border-radius:4px; background:#00f3ff14; color:var(--cyan); border:1px solid #00f3ff40; font-family:'JetBrains Mono',monospace; }
+  .pub-card h3{ margin:0; font-size:14.5px; }
+  .pub-card p{ margin:0; font-size:12.5px; color:var(--text-faint); }
+  .pub-card .meta{ font-size:11.5px; color:var(--text-dim); }
+  .pub-link{ display:inline-flex; align-items:center; gap:6px; font-size:12px; color:var(--cyan); text-decoration:none; font-weight:700; margin-top:2px; }
+  .pub-link:hover{ text-decoration:underline; }
+
+  /* CONTACT / FOOTER */
+  .contact-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px; margin-bottom:32px; }
+  .contact-card{
+    padding:20px 22px; display:flex; align-items:center; gap:14px;
+    text-decoration:none; transition:border-color .15s, transform .15s;
+  }
+  .contact-card:hover{ border-color:var(--card-border-strong); transform:translateY(-3px); }
+  .contact-card .cv{ word-break:break-word; }
+  .contact-card .icon{ color:var(--cyan); width:20px; height:20px; }
+  .contact-card .cl{ font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--text-faint); }
+  .contact-card .cv{ font-size:14px; color:var(--text); font-weight:600; }
+  footer{ border-top:1px solid var(--card-border); padding-block:32px; }
+  .copyright{ color:var(--text-faint); font-size:12px; text-align:center; }
+
+  @media (max-width:600px){
+    .navlinks{ display:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+<div class="bg-glow glow"></div>
+
+<nav class="topnav">
+  <div class="wrap">
+    <a class="brand" href="#top"><span class="dot"></span>DS_/SYSTEM</a>
+    <ul class="navlinks">
+      <li><a href="#profile">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#stack">Matrix</a></li>
+      <li><a href="#honors">Honors</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-social">
+      <a class="nav-icon" href="https://www.linkedin.com/in/divyansh-sachdev/" target="_blank" rel="noopener" aria-label="LinkedIn">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+      </a>
+      <a class="nav-icon" href="mailto:divyanshsachdev3@gmail.com" aria-label="Email">
+        <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
+      </a>
+      <a class="nav-btn" href="https://github.com/divyansh-sachdev" target="_blank" rel="noopener">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg>
+        GitHub
+      </a>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <section class="hero" id="top">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="boot mono">
+          <svg class="icon" viewBox="0 0 24 24"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+          INITIALIZING AI CORE // DIVYANSH SACHDEV <span class="cursor">▍</span>
+        </div>
+        <h1>DIVYANSH<br>SACHDEV</h1>
+        <p class="role">AI + ROBOTICS ENGINEER</p>
+        <p class="bio">Applied AI across embedded hardware and full software stacks — computer vision, autonomous systems and machine learning, proven on competition floors at IIT, NIT and IIIT campuses nationwide.</p>
+        <div class="field-row">
+          <div class="field">
+            <span class="field-label">Direct Email</span>
+            <a class="field-value link" href="mailto:divyanshsachdev3@gmail.com">divyanshsachdev3@gmail.com</a>
+          </div>
+          <div class="field">
+            <span class="field-label">LinkedIn</span>
+            <a class="field-value link" href="https://www.linkedin.com/in/divyansh-sachdev/" target="_blank" rel="noopener">/in/divyansh-sachdev</a>
+          </div>
+          <div class="field">
+            <span class="field-label">Status</span>
+            <span class="field-value">Open to Collaboration</span>
+          </div>
+        </div>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#projects">View Projects</a>
+          <a class="btn btn-ghost" href="https://github.com/divyansh-sachdev" target="_blank" rel="noopener">GitHub Profile</a>
+        </div>
+        <div class="stat-row">
+          <div class="stat"><div class="stat-num" data-count="97">0</div><div class="stat-label">Events Entered</div></div>
+          <div class="stat"><div class="stat-num" data-count="35">0</div><div class="stat-label">Outright Wins</div></div>
+          <div class="stat"><div class="stat-num" data-count="17">0</div><div class="stat-label">AI/HW Codebases</div></div>
+          <div class="stat"><div class="stat-num" data-count="2">0</div><div class="stat-label">Yrs Founder Exp.</div></div>
+        </div>
+      </div>
+      <div class="hud-wrap">
+        <div class="hud">
+          <div class="ring"></div>
+          <div class="ring2"></div>
+          <img class="hud-photo" src="assets/divyansh.jpeg" width="200" height="200"
+               alt="Divyansh Sachdev at the Team Shunya exhibition booth">
+        </div>
+        <div class="hud-status"><span class="led"></span>SYSTEM READY</div>
+        <div class="hud-readout">
+          <div>EVENTS<b>097</b></div>
+          <div>WINS<b>035</b></div>
+          <div>REPOS<b>017</b></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="profile">
+    <div class="wrap">
+      <span class="eyebrow"><span class="num">01 //</span> ENGINEER BIOGRAPHY &amp; METRICS</span>
+      <h2 class="title">System profile</h2>
+      <p class="lede">The short version of who's building this, and where the effort has gone.</p>
+      <div class="profile-grid">
+        <div class="yaml-card panel">
+<pre><span class="c"># engineer.yaml</span>
+<span class="k">name:</span> <span class="s">Divyansh Sachdev</span>
+<span class="k">role:</span> <span class="s">AI Developer — Artificial Intelligence + Robotics</span>
+<span class="k">domains:</span>
+  <span class="c">-</span> <span class="s">Applied AI across embedded hardware &amp; software stacks</span>
+  <span class="c">-</span> <span class="s">Computer vision &amp; autonomous systems</span>
+  <span class="c">-</span> <span class="s">Machine learning / deep learning</span>
+<span class="k">github:</span> <span class="s">divyansh-sachdev</span>
+<span class="k">record:</span>
+  <span class="c">-</span> <span class="s">97 competitions entered, national + international</span>
+  <span class="c">-</span> <span class="s">35 outright wins, 58 podium finishes</span>
+  <span class="c">-</span> <span class="s">Podiums at IIT Delhi, IIT Madras, NIT Surathkal, IIIT Delhi</span></pre>
+        </div>
+        <div class="side-stats">
+          <div class="row"><span>Total events</span><b>97</b></div>
+          <div class="row"><span>Winner</span><b>35</b></div>
+          <div class="row"><span>1st Runner-Up</span><b>40</b></div>
+          <div class="row"><span>2nd Runner-Up</span><b>18</b></div>
+          <div class="row"><span>3rd Runner-Up / Finalist</span><b>4</b></div>
+          <div class="row"><span>Open-source repos</span><b>17</b></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="wrap">
+      <span class="eyebrow"><span class="num">02 //</span> WORK EXPERIENCE</span>
+      <h2 class="title">Chronicle // Career timeline</h2>
+      <p class="lede">From founding a robotics &amp; AI studio to shipping production frontend systems.</p>
+      <div class="timeline">
+        <div class="tl-item current">
+          <div class="tl-dot"></div>
+          <div class="tl-card panel">
+            <div class="tl-top">
+              <span><span class="tl-role">Frontend Engineer</span> — <span class="tl-org">Paysecure</span></span>
+              <span class="tl-dates">2025 — PRESENT</span>
+            </div>
+            <p class="tl-desc">Building and maintaining production frontend systems.</p>
+            <div class="tl-tags">
+              <span class="tag">Frontend Engineering</span>
+              <span class="tag">Production Systems</span>
+            </div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-card panel">
+            <div class="tl-top">
+              <span><span class="tl-role">Founder</span> — <span class="tl-org">Shunya</span></span>
+              <span class="tl-dates">2023 — 2025</span>
+            </div>
+            <p class="tl-desc">Founded and led Shunya, an AI &amp; robotics studio — shipped 30+ projects spanning combat robots, autonomous systems and embedded AI wearables.</p>
+            <div class="tl-tags">
+              <span class="tag">Robotics</span>
+              <span class="tag">Applied AI</span>
+              <span class="tag">30+ Projects</span>
+              <span class="tag">Leadership</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="stack">
+    <div class="wrap">
+      <span class="eyebrow"><span class="num">03 //</span> AI + ROBOTICS TECHNICAL MATRIX</span>
+      <h2 class="title">Tech stack</h2>
+      <p class="lede">Tools spanning model training down to the sensor bus.</p>
+      <div class="stack-grid">
+        <div class="stack-card panel"><h3><svg class="icon" viewBox="0 0 24 24"><path d="M9 3v18M15 3v18M3 9h18M3 15h18"/></svg>Machine Learning / DL</h3><div class="tagset">
+          <span class="tag">PyTorch</span><span class="tag">TensorFlow</span><span class="tag">Scikit-Learn</span>
+        </div></div>
+        <div class="stack-card panel"><h3><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M3 12h4M17 12h4M12 3v4M12 17v4"/></svg>Computer Vision</h3><div class="tagset">
+          <span class="tag">OpenCV</span><span class="tag">YOLO</span>
+        </div></div>
+        <div class="stack-card panel"><h3><svg class="icon" viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="2"/><path d="M9 9h6v6H9zM2 9h3M2 15h3M19 9h3M19 15h3M9 2v3M15 2v3M9 19v3M15 19v3"/></svg>Robotics &amp; Hardware AI</h3><div class="tagset">
+          <span class="tag">ROS2</span><span class="tag">ESP32</span><span class="tag">Arduino</span><span class="tag">Raspberry Pi</span>
+        </div></div>
+        <div class="stack-card panel"><h3><svg class="icon" viewBox="0 0 24 24"><path d="M13 2 3 14h7l-1 8 10-12h-7z"/></svg>Edge AI / Embedded</h3><div class="tagset">
+          <span class="tag">TFLite</span><span class="tag">Edge Impulse</span>
+        </div></div>
+        <div class="stack-card panel"><h3><svg class="icon" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>Languages</h3><div class="tagset">
+          <span class="tag">Python</span><span class="tag">C++</span>
+        </div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="honors">
+    <div class="wrap">
+      <span class="eyebrow"><span class="num">04 //</span> NATIONAL &amp; INTERNATIONAL HONORS</span>
+      <h2 class="title">90+ competition wins</h2>
+      <p class="lede">Robotics, AI and innovation events across top engineering institutes — filter the full log by result.</p>
+
+      <div class="highlight-grid">
+        <div class="h-card panel"><span class="badge W">WINNER</span><span class="ev">IIIT Delhi</span></div>
+        <div class="h-card panel"><span class="badge W">WINNER</span><span class="ev">Tinkerhub — IIT Indore</span></div>
+        <div class="h-card panel"><span class="badge R1">1ST RUNNER-UP</span><span class="ev">HoverHurdle — IIT Delhi</span></div>
+        <div class="h-card panel"><span class="badge R1">1ST RUNNER-UP</span><span class="ev">Micromouse — IIIT Delhi</span></div>
+        <div class="h-card panel"><span class="badge R2">2ND RUNNER-UP</span><span class="ev">IIIT Nagpur</span></div>
+        <div class="h-card panel"><span class="badge R2">2ND RUNNER-UP</span><span class="ev">NIT Surathkal</span></div>
+        <div class="h-card panel"><span class="badge R2">2ND RUNNER-UP</span><span class="ev">Robowars 8kg — IIT Madras</span></div>
+        <div class="h-card panel"><span class="badge R2">2ND RUNNER-UP</span><span class="ev">Biotech Innovation — IIT Madras</span></div>
+        <div class="h-card panel"><span class="badge R2">2ND RUNNER-UP</span><span class="ev">Robosumo — IIIT Delhi</span></div>
+        <div class="h-card panel"><span class="badge R2">2ND RUNNER-UP</span><span class="ev">NIT Jamshedpur Drone Race</span></div>
+        <div class="h-card panel"><span class="badge R2">2ND RUNNER-UP</span><span class="ev">Robowars 15kg — IIT Delhi</span></div>
+        <div class="h-card panel"><span class="badge R3">3RD RUNNER-UP</span><span class="ev">NIT Jalandhar</span></div>
+      </div>
+
+      <div class="chiprow" id="chiprow">
+        <button class="chip active" data-filter="all">All <b>(97)</b></button>
+        <button class="chip" data-filter="W">Winner <b>(35)</b></button>
+        <button class="chip" data-filter="R1">1st Runner-Up <b>(40)</b></button>
+        <button class="chip" data-filter="R2">2nd Runner-Up <b>(18)</b></button>
+        <button class="chip" data-filter="R3">3rd Runner-Up <b>(1)</b></button>
+        <button class="chip" data-filter="F">Finalist <b>(3)</b></button>
+      </div>
+
+      <div class="table-panel panel">
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>Event</th><th>Result</th></tr></thead>
+            <tbody id="ach-body"></tbody>
+          </table>
+        </div>
+        <div class="table-foot" id="ach-count">Showing 97 of 97</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="wrap">
+      <span class="eyebrow"><span class="num">05 //</span> DEPLOYMENTS — AI + HARDWARE CODEBASES</span>
+      <h2 class="title">17 featured AI + hardware codebases</h2>
+      <p class="lede">Wearables, edge-CV devices and robotics controllers — each repo is a working build, not a mockup.</p>
+      <div class="proj-grid" id="proj-grid"></div>
+    </div>
+  </section>
+
+  <section id="publications">
+    <div class="wrap">
+      <span class="eyebrow"><span class="num">06 //</span> WRITING</span>
+      <h2 class="title">Publications</h2>
+      <p class="lede">Peer-reviewed and indexed research.</p>
+      <div class="pub-grid">
+        <div class="pub-card">
+          <span class="status">PUBLISHED</span>
+          <h3>TechniQuilt — A Framework for Web Developers</h3>
+          <p class="meta">European Chemical Bulletin, Vol. 11, Issue 12 (2023) · DOI: 10.48047/ecb/2023.11.12.019</p>
+          <a class="pub-link" href="https://www.eurchembull.com/archives/volume-11/issue-12/12577" target="_blank" rel="noopener">Read Paper ↗</a>
+        </div>
+        <div class="pub-card">
+          <span class="status">PUBLISHED</span>
+          <h3>Smart Indoor Air Quality Monitoring Device with Automated Threshold-Based Control</h3>
+          <p class="meta">IEMECON 2025, IEEE · DOI: 10.1109/IEMECON69302.2025.11365921</p>
+          <a class="pub-link" href="https://ieeexplore.ieee.org/document/11365921" target="_blank" rel="noopener">Read Paper ↗</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap">
+      <span class="eyebrow"><span class="num">07 //</span> GET IN TOUCH</span>
+      <h2 class="title">Let's build something</h2>
+      <p class="lede">Open to collaboration on applied AI, computer vision and robotics projects.</p>
+      <div class="contact-grid">
+        <a class="contact-card panel" href="mailto:divyanshsachdev3@gmail.com">
+          <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
+          <div><div class="cl">Direct Email</div><div class="cv">divyanshsachdev3@gmail.com</div></div>
+        </a>
+        <a class="contact-card panel" href="tel:+918696843733">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
+          <div><div class="cl">Telephone</div><div class="cv">+91 86968 43733</div></div>
+        </a>
+        <a class="contact-card panel" href="https://www.linkedin.com/in/divyansh-sachdev/" target="_blank" rel="noopener">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          <div><div class="cl">LinkedIn</div><div class="cv">/in/divyansh-sachdev</div></div>
+        </a>
+        <a class="contact-card panel" href="https://github.com/divyansh-sachdev" target="_blank" rel="noopener">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg>
+          <div><div class="cl">GitHub</div><div class="cv">divyansh-sachdev</div></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <p class="copyright">© 2026 Divyansh Sachdev — AI + Robotics, hardware &amp; software.</p>
+    </div>
+  </footer>
+</main>
+
+<script>
+(function(){
+  "use strict";
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var ACH = [
+    ["IIIT Delhi","W"],["VIT Vellore","R1"],["Bihar Innovation Challenge","F"],["IIIT Nagpur","R2"],
+    ["NIT Surathkal","R2"],["Chandigarh University","R1"],["NIT Jalandhar","R3"],["SKIT Jaipur","F"],
+    ["COEP Pune","R1"],["Capture the Hack","W"],["Makerfest JECRC","R1"],["IIC Regional Meet","W"],
+    ["Robowars 8kg — IIT Madras","R2"],["Biotech Innovation — IIT Madras","R2"],["Wirewizard Arduino Challenge","R2"],
+    ["Robowars 15kg — DTU","W"],["BTL Starttech 3.0","F"],["Project Expo — Manipal","W"],["Project Expo — UEM","W"],
+    ["Paper Presentation — UEM","W"],["Tinkerhub — IIT Indore","W"],["HackUEM","R1"],["HoverHurdle — IIT Delhi","R1"],
+    ["Robowar 8kg","R1"],["RC Soccer — Nirma University","W"],["Robosumo — Nirma University","W"],
+    ["Robosumo — IIIT Delhi","R2"],["RC Race — Technoxian","R1"],["Techutopia — Velocity","W"],["Techutopia — Drone","W"],
+    ["Techutopia — Boat","R1"],["Techutopia — Soccer","W"],["Techutopia — Soccer","R2"],["Techutopia — Tug of War","W"],
+    ["Techutopia — Tug of War","R2"],["Techutopia — Project Expo","R1"],["Techvaganza — Robo Race","W"],
+    ["Techvaganza — Robo Race","R1"],["Techvaganza — Robo War","W"],["Techvaganza — Robo War","R1"],
+    ["Techvaganza — Robo War","R2"],["Techvaganza — Tech Expo","R1"],["Techvaganza — Robo Soccer","W"],
+    ["Techvaganza — Robo Soccer","R1"],["Techvaganza — Robo Soccer","R2"],["Techfest SLIET — Kratim","W"],
+    ["COEP War 8kg","R2"],["COEP War 15kg","R1"],["PEC War 15kg","R1"],["MNIT Robowar 15kg","W"],
+    ["MNIT Robowar 15kg","R1"],["RGIPT Project Expo","R1"],["VJTI Robostrike","W"],["VJTI Robosoccer","R2"],
+    ["JECRC Robosoccer","W"],["JECRC Robosoccer","R1"],["JECRC Robosoccer","R2"],["JECRC Project Expo","R2"],
+    ["NIT Jamshedpur Drone Race","R2"],["Velocity — MUJ","R1"],["Circuit Chase — MUJ","W"],
+    ["RoboSumo — SGSITS Indore","W"],["RoboSumo — SGSITS Indore","R1"],["RoboRace — SGSITS Indore","W"],
+    ["RoboRace — SRM Sonepat","R1"],["Robowars 15kg — IIT Delhi","R2"],["MU Spandan — Drone Race","R1"],
+    ["MU Spandan — RoboRace","R2"],["RNTU Bhopal Robowars","R1"],["Medicaps Indore Robowar","W"],
+    ["Amity University Mumbai Robowars","W"],["Amity University Mumbai Robowars","R1"],["Micromouse — IIIT Delhi","R1"],
+    ["SLIET Longwal Project Expo","W"],["SLIET Longwal Robo Race","R1"],["NIIT RoboRace","W"],["NIIT RoboRace","R1"],
+    ["NIIT RoboSoccer","R1"],["MANIT Bhopal Robowars","R1"],["MANIT Bhopal InnovateX","R1"],
+    ["RoboRace — Manipal Jaipur","W"],["RoboRace — Manipal Jaipur","R1"],["Robowar — Poornima","W"],
+    ["RoboRace — Poornima","W"],["RoboRace — BVCOE Mumbai","R1"],["Robowar — SAKEC Mumbai","R1"],
+    ["RoboRace — JECRC Foundation","R1"],["RoboRace — JECRC Rythm","W"],["Robowar — JECRC Rythm","R1"],
+    ["RoboRace — SRM Sonepat 2026","R1"],["RoboRace — BML Munjal","W"],["RoboRace — BML Munjal","R1"],
+    ["RoboRace — HBTU Kanpur","W"],["RoboRace — EIT Faridabad","W"],["RoboRace — JECRC Innov8","R1"],
+    ["RoboRace — GGSIPU","R1"],["RoboRace — GGSIPU","R2"]
+  ];
+  var BADGE_LABEL = { W:"WINNER", R1:"1ST RUNNER-UP", R2:"2ND RUNNER-UP", R3:"3RD RUNNER-UP", F:"FINALIST" };
+
+  var achBody = document.getElementById('ach-body');
+  ACH.forEach(function(row){
+    var tr = document.createElement('tr');
+    tr.dataset.tier = row[1];
+    tr.innerHTML = '<td>'+row[0]+'</td><td><span class="badge '+row[1]+'">'+BADGE_LABEL[row[1]]+'</span></td>';
+    achBody.appendChild(tr);
+  });
+
+  var countEl = document.getElementById('ach-count');
+  document.getElementById('chiprow').addEventListener('click', function(e){
+    var btn = e.target.closest('.chip');
+    if(!btn) return;
+    document.querySelectorAll('.chip').forEach(function(c){ c.classList.remove('active'); });
+    btn.classList.add('active');
+    var f = btn.dataset.filter;
+    var shown = 0;
+    achBody.querySelectorAll('tr').forEach(function(tr){
+      var match = f === 'all' || tr.dataset.tier === f;
+      tr.classList.toggle('row-hidden', !match);
+      if(match) shown++;
+    });
+    countEl.textContent = 'Showing ' + shown + ' of 97';
+  });
+
+  var PROJECTS = [
+    ["medtech-glove-esp32","IoT glove that remotely monitors BPM, SpO₂ and ECG with a live Wi-Fi dashboard.",["ESP32","MAX30102","AD8232"]],
+    ["hydration-monitor-esp32","Wearable estimating hydration in children from skin conductance and temperature.",["ESP32","GSR","DS18B20"]],
+    ["combat-robot-esp32-controller","RC robowar controller for 8/15/30kg bots: drive mixing, spinner weapon, failsafe.",["ESP32","RC PWM","ESC"]],
+    ["respira-ai-guardian","Edge respiratory and acoustic anomaly monitor for asthma detection.",["ESP32","I2S","BME680"]],
+    ["cardiovision-ai-band","Wearable cardiac monitor with real-time Pan-Tompkins QRS & arrhythmia detection.",["ESP32","AD8232","Pan-Tompkins"]],
+    ["sleepsense-ai-pillow","Smart pillow analyzing sleep posture kinematics and snoring acoustics.",["ESP32","FSR Matrix","BLE"]],
+    ["gait-ai-mobility-tracker","Wearable fall detection and stride cadence analyzer for mobility care.",["ESP32","MPU6050","IMU"]],
+    ["nutrivision-ai-plate","Smart dining plate with edge computer vision food classification & portion weighing.",["ESP32-CAM","HX711","Edge AI"]],
+    ["childcare-ai-guardian","Pediatric band detecting fevers, crying stress and vitals via sensor fusion.",["ESP32","MLX90614","GSR"]],
+    ["ecomind-ai-station","Autonomous environmental hub forecasting PM2.5, gases and microclimate trends.",["ESP32","PMS5003","BME280"]],
+    ["drivesafe-ai-copilot","Real-time driver drowsiness & fatigue detector — under 1.5% false alarm rate across 468 3D facial landmark meshes.",["Python","MediaPipe","OpenCV","PyTorch","SciPy"]],
+    ["smartshield-ai-security","Low-power PIR wake-up surveillance system with edge person classification.",["ESP32-CAM","PIR","Telegram"]],
+    ["vision-ai-assist-robot","Autonomous companion robot with visual person tracking and ultrasonic navigation.",["ESP32","OpenCV","ToF"]],
+    ["job-classifier","ML-based job/role classification project.",["Python"]],
+    ["ppe-safety-detection-pipeline","Real-time PPE compliance detection — 96.5% mAP@50, cutting manual safety audit overhead by 75%.",["PyTorch","YOLOv11","OpenCV","FastAPI","Docker"]],
+    ["genai-rag-knowledge-engine","Self-hosted enterprise RAG engine — 65% faster retrieval, sub-1.2s streaming responses, zero external APIs.",["Llama 3 8B","LangChain","ChromaDB","FastAPI"]],
+    ["esp32cam-tinyml-object-detection","Standalone edge object detection — 48ms inference within 80KB SRAM.",["TFLite Micro","C++","ESP32","INT8 Quantization"]]
+  ];
+  var grid = document.getElementById('proj-grid');
+  PROJECTS.forEach(function(p){
+    var url = 'https://github.com/divyansh-sachdev/' + p[0];
+    var card = document.createElement('div');
+    card.className = 'proj-card panel';
+    card.innerHTML =
+      '<div class="proj-head"><svg class="icon" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg><h3>' + p[0] + '</h3></div>' +
+      '<p>' + p[1] + '</p>' +
+      '<div class="tagset">' + p[2].map(function(t){ return '<span class="tag">'+t+'</span>'; }).join('') + '</div>' +
+      '<a class="proj-link" href="'+url+'" target="_blank" rel="noopener">View Repo ↗</a>';
+    grid.appendChild(card);
+  });
+
+  var counted = false;
+  function runCounters(){
+    if(counted) return;
+    counted = true;
+    document.querySelectorAll('.stat-num').forEach(function(el){
+      var target = parseInt(el.dataset.count, 10);
+      if(reduced){ el.textContent = target; return; }
+      var start = null, dur = 900;
+      function step(ts){
+        if(start === null) start = ts;
+        var p = Math.min(1, (ts - start) / dur);
+        el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3)));
+        if(p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    });
+  }
+  var statRow = document.querySelector('.stat-row');
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if(en.isIntersecting) runCounters(); });
+    }, { threshold:.4 });
+    io.observe(statRow);
+  } else {
+    runCounters();
+  }
+})();
+</script>
+</body>
+</html>
